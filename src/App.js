@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './Components/NavBar';
+import Login from './Components/Login';
+import UserDetails from './Components/ProfilePage';
+import { Routes, Route } from "react-router-dom";
+import PrivateRoutes from './Components/ProtectedRoute';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const navigate = useNavigate();
+  console.log("Rendering");
+  
+  console.log(JSON.parse(localStorage.getItem('isLoggedIn')));
+
+  return (<div>
+      <NavBar />
+      <Routes>
+        {/* <Route exact path="/" element={JSON.parse(localStorage.getItem('isLoggedIn')) ? <UserDetails/> : <Login />} /> */}
+        <Route element={<PrivateRoutes/>}>
+              <Route path='/userDetails' element={<UserDetails />} />
+              <Route exact path="/" element={<UserDetails />} />
+          </Route>
+      </Routes>
+  </div>
   );
 }
 
